@@ -1,0 +1,62 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --container-size: 300px;
+    --viewport: 100vw;
+    --container-color: white;
+}
+
+.container {
+    background: #333;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 100vh;
+    grid-auto-rows: 100vh;
+    min-height: 100vh;
+}
+
+.grid__item {
+
+}
+
+
+
+.component {
+    --targetQuerySizeMin: 600;
+    --targetQuerySizeMax: 800;
+    --targetQueryClass: component--adapted;
+}
+
+
+
+.component {
+    background: var(--container-color);
+    padding: 1rem;
+    width: 100%;
+}
+
+.component--adapted {
+    background: purple;
+}
+
+/*
+at min 600px, we want the component to be purple
+ */
+
+
+
+@media (min-width: var(--viewport-container)) {
+    .component {
+        background: purple;
+    }
+}

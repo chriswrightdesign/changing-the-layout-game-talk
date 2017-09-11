@@ -1,3 +1,10 @@
+
+const widthEditor = document.querySelector('.js-width-editor');
+const heightEditor = document.querySelector('.js-height-editor');
+
+const demoTarget = document.querySelector('.js-size-watcher');
+
+
 /* euclidean GCD (feel free to use any other) */
 function gcd(x, y) {
      if (y > x) {
@@ -19,7 +26,6 @@ const ratio = (x, y) => {
      const valueA = x / c;
      const valueB = y / c;
 
-     console.log('a b', [valueA, valueB]);
      return [valueA, valueB];
 }
 
@@ -28,10 +34,11 @@ const bigRound = value => Math.floor(value / 50) * 50;
 // these need to have potentially multiple configurations
 const SHAPES = {
     SQUARE: [[1, 1], [3, 3]],
-    RECTANGLE_SMALL_WIDE: [[3, 2], [4, 3]],
-    RECTANGLE_WIDE: [[3, 1]],
-    RECTANGLE_SMALL_TALL: [[2, 3], [3, 4]],
-    RECTANGLE_TALL: [[1, 3]],
+    RECTANGLE_SMALL_WIDE: [[3, 2], [4, 3], [6, 5]],
+    RECTANGLE_WIDE: [[3, 1], [5, 3], [2, 1]],
+    RECTANGLE_SMALL_TALL: [[2, 3], [3, 4], [5, 4]],
+    RECTANGLE_TALL: [[1, 3], [3, 5]],
+    EXTREME_NARROW_WIDE: [[5, 1], [6, 1], [7, 1], [4, 1]]
 };
 
 const findClassWithMatch = target => keyword =>
@@ -50,10 +57,12 @@ const SHAPE_CLASS = {
     RECTANGLE_SMALL_WIDE: 'aspect-ratio--rectangle-small-wide',
     RECTANGLE_WIDE: 'aspect-ratio--rectangle-wide',
     RECTANGLE_SMALL_TALL: 'aspect-ratio--rectangle-small-tall',
-    RECTANGLE_TALL: 'aspect-ratio-rectangle-tall'
+    RECTANGLE_TALL: 'aspect-ratio--rectangle-tall',
+    EXTREME_NARROW_WIDE: 'aspect-ratio--rectangle-narrow-wide'
 };
 
 const findShape = dimensions => {
+    console.log('dim', dimensions);
     return Object.keys(SHAPES)
         .find(v => SHAPES[v]
             .find(shape => shape.every((s, index) =>
@@ -67,15 +76,8 @@ const pipe = (...funcs) => funcs.reduce((simplePipe));
 const calcRatioAndFindShape = pipe(ratio, findShape);
 
 
-const setVariable = target => (varName, value) => {
-    target.style.setProperty(varName, value);
-}
-
-const getVariable = target =>
-    variableName => getComputedStyle(target).getPropertyValue(variableName);
-
-
 if (typeof ResizeObserver !== 'undefined') {
+
 const elementSizes = new ResizeObserver(r => r.forEach(reportSize));
 
 const elementsToWatch = Array.from(document.querySelectorAll('.js-size-watcher'));
@@ -84,10 +86,6 @@ const reportSize = entry => {
 
     const {contentRect, target} = entry;
     const {width, height} = contentRect;
-
-    const setTarget = setVariable(target);
-    setTarget('--element-width', width);
-    setTarget('--element-height', height);
 
     const ratio = calcRatioAndFindShape(bigRound(width), bigRound(height));
 
@@ -103,3 +101,11 @@ elementsToWatch.forEach(element => {
     elementSizes.observe(element);
 });
 }
+
+
+const adjustSize = dimension => e => {
+    demoTarget.style[dimension] = `${e.target.value}px`;
+}
+
+heightEditor.addEventListener('change', adjustSize('height'), false);
+widthEditor.addEventListener('change', adjustSize('width'), false);
