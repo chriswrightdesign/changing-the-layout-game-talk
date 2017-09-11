@@ -32,9 +32,9 @@ body {
 
 
 .component {
+    --targetQueryClass: component--adapted;
     --targetQuerySizeMin: 600;
     --targetQuerySizeMax: 800;
-    --targetQueryClass: component--adapted;
 }
 
 
