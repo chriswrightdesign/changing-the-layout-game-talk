@@ -5,7 +5,10 @@ const heightEditor = document.querySelector('.js-height-editor');
 const demoTarget = document.querySelector('.js-size-watcher');
 
 
-/* euclidean GCD (feel free to use any other) */
+/*
+    Some greatest common divisor calculation I found from stackOverflow
+ */
+
 function gcd(x, y) {
      if (y > x) {
           temp = x;
@@ -31,7 +34,11 @@ const ratio = (x, y) => {
 
 const bigRound = value => Math.floor(value / 50) * 50;
 
-// these need to have potentially multiple configurations
+/**
+ * This is where we define what ratios are a specific shape.
+ * It's a list of paired numbers like '4:3'
+ */
+
 const SHAPES = {
     SQUARE: [[1, 1], [3, 3]],
     RECTANGLE_SMALL_WIDE: [[3, 2], [4, 3], [6, 5]],
@@ -47,10 +54,15 @@ const findClassWithMatch = target => keyword =>
         .find(v => v.includes(keyword));
 
 const replaceClass = target => (keyword, newClassName) => {
+    // some janky class replacement I threw together
      const currentClassName = findClassWithMatch(target)(keyword);
      target.classList.remove(currentClassName);
      target.classList.add(newClassName);
 }
+
+/*
+ * This is our class name dictionary based on shape
+ */
 
 const SHAPE_CLASS = {
     SQUARE: 'aspect-ratio--square',
@@ -61,8 +73,11 @@ const SHAPE_CLASS = {
     EXTREME_NARROW_WIDE: 'aspect-ratio--rectangle-narrow-wide'
 };
 
+/**
+ * This is the code to find the first match in the shape dictionary
+ */
 const findShape = dimensions => {
-    console.log('dim', dimensions);
+    console.log('dimension', dimensions);
     return Object.keys(SHAPES)
         .find(v => SHAPES[v]
             .find(shape => shape.every((s, index) =>
@@ -78,28 +93,28 @@ const calcRatioAndFindShape = pipe(ratio, findShape);
 
 if (typeof ResizeObserver !== 'undefined') {
 
-const elementSizes = new ResizeObserver(r => r.forEach(reportSize));
+    const elementSizes = new ResizeObserver(r => r.forEach(reportSize));
 
-const elementsToWatch = Array.from(document.querySelectorAll('.js-size-watcher'));
+    const elementsToWatch = Array.from(document.querySelectorAll('.js-size-watcher'));
 
-const reportSize = entry => {
+    const reportSize = entry => {
 
-    const {contentRect, target} = entry;
-    const {width, height} = contentRect;
+        const {contentRect, target} = entry;
+        const {width, height} = contentRect;
 
-    const ratio = calcRatioAndFindShape(bigRound(width), bigRound(height));
+        const ratio = calcRatioAndFindShape(bigRound(width), bigRound(height));
 
-    if (SHAPE_CLASS[ratio]) {
-        console.log('item has new ratio', ratio);
-        replaceClass(target)('aspect-ratio', SHAPE_CLASS[ratio]);
+        if (SHAPE_CLASS[ratio]) {
+            console.log('item has new ratio', ratio);
+            replaceClass(target)('aspect-ratio', SHAPE_CLASS[ratio]);
+        }
+
     }
 
-}
-
-elementsToWatch.forEach(element => {
-    console.log('watching element', element);
-    elementSizes.observe(element);
-});
+    elementsToWatch.forEach(element => {
+        console.log('watching element', element);
+        elementSizes.observe(element);
+    });
 }
 
 

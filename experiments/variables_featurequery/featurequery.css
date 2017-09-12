@@ -1,0 +1,35 @@
+
+:root {
+    --spacing: 1rem;
+    --grid-fallback-flex: flex;
+    --grid-fallback-margin: var(--spacing);
+}
+
+
+@supports(display: grid) {
+    :root {
+        --grid-fallback-flex: grid;
+        --grid-fallback-margin: initial;
+    }
+}
+
+/**
+ * This is just here so you can see the difference
+ */
+.container {
+     max-width: 700px;
+     margin: 0 auto;
+}
+
+.grid {
+    display: var(--grid-fallback-flex);
+    grid-gap: var(--spacing);
+}
+
+.grid--gutter {
+    margin-left: calc(var(--grid-fallback-margin) * -1);
+}
+
+.grid--gutter > .grid__item {
+    margin-left: var(--grid-fallback-margin);
+}

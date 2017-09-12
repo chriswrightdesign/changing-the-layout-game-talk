@@ -1,0 +1,17 @@
+
+
+.component {
+    /* Base styles */
+}
+
+.has-shape-tall-rectangle .component {
+    /* Reorder image with content */
+}
+
+.has-shape-wide-rectangle .component {
+    /* Hide image */
+}
+
+.has-shape-square .component {
+    /* etc etc */
+}

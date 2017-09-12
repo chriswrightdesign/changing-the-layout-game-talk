@@ -50,6 +50,13 @@ body {
 
 }
 
+/**
+ * This is a contrived animation to show you that
+ * ResizeObserver will listen for changes that CSS controls
+ * which in this case is width, something you'd probably
+ * never animate.
+ */
+
 @keyframes demoWidth {
     0% {
         width: 100px;

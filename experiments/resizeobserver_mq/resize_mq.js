@@ -13,6 +13,12 @@ const matchesMediaCondition = (width, queryMin, queryMax) => {
     return matchesMin && matchesMax;
 }
 
+/**
+ * This version will only let you add a single query,
+ * but with a bit of tweaking you could make it accept
+ * any number of queries
+ */
+
 const containerQuery = (target, size) => {
     const {width, height} = size;
 
@@ -29,8 +35,6 @@ const containerQuery = (target, size) => {
     const action = matchMq && !target.classList.contains(queryClass) ? 'add' : 'remove';
 
     targetComponent.classList[action](queryClass);
-
-
 }
 
 const reportSize = entry => {

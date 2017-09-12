@@ -1,0 +1,61 @@
+
+html {
+
+}
+
+body {
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background: #eee;
+}
+
+.c-size-watcher {
+    --element-width: 1349;
+    --ewPx: calc(var(--element-width) * 3px);
+    position: relative;
+    &::after {
+        content: '--element-width : 'var(--element-width);
+    }
+
+}
+
+.c-card__heading {
+    --minFontSize: 16;
+    --minFontPx: calc(var(--minFontSize) * 1px);
+    --maxFontSize: 96;
+    --minScreenSize: 200;
+    --minScreenPx: calc(var(--minScreenSize) * 1px);
+    --maxScreenSize: 1200;
+
+    font-size: calc(var(--minFontPx) + (var(--maxFontSize) - var(--minFontSize)) * (var(--ewPx) - var(--minScreenPx)) / (var(--maxScreenSize) - var(--minScreenSize)));
+
+}
+
+/*
+    --element-width:
+    --element-height:
+    --element-ratio:
+ */
+
+/*
+calc(minFontSize + (maxFontSize - minFontSize) * (100vw - minScreenSize) / (maxScreenSize - minScreenSize);
+
+ */
+
+
+.c-controls {
+
+}
+
+.l-grid {
+    display: grid;
+    grid-template-columns: 500px 500px;
+}
+
+.l-grid__item {
+    border: 1px solid #f0f;
+}

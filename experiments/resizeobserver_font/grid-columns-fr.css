@@ -1,0 +1,80 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+}
+
+.is-hidden {
+    display: none;
+}
+/* End reset */
+
+@supports(display: grid) {
+     .l-grid {
+          display: grid;
+     }
+
+
+
+     .l-grid--half-half {
+          grid-template-columns: 1fr 1fr;
+
+     }
+
+}
+
+
+.l-center-center {
+     align-items: center;
+     justify-content: center;
+}
+
+.l-full-height {
+     min-height: 100vh;
+}
+
+.green {
+     background: rgba(0, 128, 57, 0.7);
+     color: #fff;
+}
+
+.content {
+     padding: 3rem;
+}
+
+.c-size-watcher {
+    --element-width: 100vw;
+    --ewPx: calc(var(--element-width) * 1px);
+}
+
+
+.heading {
+    --minFontSize: 16;
+    --minFontPx: calc(var(--minFontSize) * 1px);
+    --maxFontSize: 96;
+    --minScreenSize: 200;
+    --minScreenPx: calc(var(--minScreenSize) * 1px);
+    --maxScreenSize: 1200;
+
+     font-family: 'Playfair Display', serif;
+     font-weight: 700;
+     font-size: 2.5rem;
+     line-height: 1.2;
+     margin-bottom: 1rem;
+
+
+
+}
+
+.heading {
+     font-size: calc(var(--minFontPx) + (var(--maxFontSize) - var(--minFontSize)) * (var(--ewPx) - var(--minScreenPx)) / (var(--maxScreenSize) - var(--minScreenSize)));
+}
+
+.description {
+     font-family: 'Raleway', sans-serif;
+     font-weight: 400;
+     font-size: 0.9rem;
+     line-height: 1.5;
+}
